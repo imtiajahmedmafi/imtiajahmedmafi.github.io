@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imtiaj Ahmed Mafi | Network & IT Infrastructure Specialist</title>
+    <meta name="description" content="Portfolio of Imtiaj Ahmed Mafi - Network & IT Infrastructure Engineer, Systems Administrator, and CSE Graduate with expertise in Cisco, MikroTik, Active Directory, and Machine Learning Research.">
+
+    <!-- Tailwind CSS (via official CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0a0f1d',
+                        cardbg: '#111827',
+                        cyanaccent: '#06b6d4',
+                        blueaccent: '#3b82f6',
+                        emeraldaccent: '#10b981'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkbg text-slate-200 antialiased selection:bg-cyan-500 selection:text-white bg-grid-pattern relative">
+
+    <!-- ====================================================================
+         INTERACTIVE PARTICLES CANVAS (মাউসের সাথে চলাফেরা করবে এমন নেটওয়ার্ক নোডস)
+         ==================================================================== -->
+    <canvas id="network-canvas" class="select-none pointer-events-none" aria-hidden="true"></canvas>
+
+    <!-- ====================================================================
+         BACKGROUND WATERMARK & NETWORK TOPOLOGY LAYER (সুস্পষ্ট ও আকর্ষণীয় ওয়াটারমার্ক)
+         ==================================================================== -->
+    <div class="watermark-layer select-none pointer-events-none" aria-hidden="true">
+        <!-- Ambient Radial Glows -->
+        <div class="ambient-glow glow-top-left"></div>
+        <div class="ambient-glow glow-mid-right"></div>
+        <div class="ambient-glow glow-bottom-left"></div>
+
+        <!-- Giant Outlined Typography Watermarks (Clear & Sharp) -->
+        <div class="watermark-outline-text watermark-hero font-mono-tech">INFRASTRUCTURE</div>
+        <div class="watermark-outline-text watermark-middle font-mono-tech">ROUTING & SWITCHING</div>
+        <div class="watermark-outline-text watermark-bottom font-mono-tech">IMTIAJ • SYSTEMS</div>
+
+        <!-- High-Tech Animated Network Topology SVG Mesh (Clear & High Contrast) -->
+        <svg class="absolute inset-0 w-full h-full opacity-[0.25]" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="netGradCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#06b6d4" stop-opacity="1"/>
+                    <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.4"/>
+                </linearGradient>
+                <linearGradient id="netGradBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#3b82f6" stop-opacity="1"/>
+                    <stop offset="100%" stop-color="#10b981" stop-opacity="0.4"/>
+                </linearGradient>
+            </defs>
+
+            <!-- Topology Connection Lines with Data Stream Animation -->
+            <line x1="8%" y1="18%" x2="28%" y2="28%" stroke="url(#netGradCyan)" stroke-width="2" class="data-stream-line" />
+            <line x1="28%" y1="28%" x2="52%" y2="15%" stroke="url(#netGradCyan)" stroke-width="2" class="data-stream-line" />
+            <line x1="52%" y1="15%" x2="78%" y2="32%" stroke="url(#netGradBlue)" stroke-width="2" class="data-stream-line" />
+            <line x1="78%" y1="32%" x2="94%" y2="22%" stroke="url(#netGradBlue)" stroke-width="2" class="data-stream-line" />
+            <line x1="28%" y1="28%" x2="40%" y2="65%" stroke="url(#netGradCyan)" stroke-width="1.8" stroke-dasharray="5 10" />
+            <line x1="40%" y1="65%" x2="68%" y2="72%" stroke="url(#netGradBlue)" stroke-width="2" class="data-stream-line" />
+            <line x1="68%" y1="72%" x2="88%" y2="85%" stroke="url(#netGradCyan)" stroke-width="2" class="data-stream-line" />
+            <line x1="52%" y1="15%" x2="68%" y2="72%" stroke="url(#netGradBlue)" stroke-width="1.8" stroke-dasharray="6 12" />
+
+            <!-- Network Topology Nodes (Routers / Switches) -->
+            <!-- Node 1 -->
+            <circle cx="8%" cy="18%" r="8" fill="#070b16" stroke="#06b6d4" stroke-width="2.5" />
+            <circle cx="8%" cy="18%" r="3" fill="#06b6d4" />
+            <text x="9%" y="17%" fill="#22d3ee" font-family="'Fira Code', monospace" font-size="12" font-weight="700">GW: 192.168.1.1/24</text>
+
+            <!-- Node 2 -->
+            <circle cx="28%" cy="28%" r="10" fill="#070b16" stroke="#3b82f6" stroke-width="2.5" />
+            <circle cx="28%" cy="28%" r="4" fill="#38bdf8" />
+            <text x="29%" y="27%" fill="#38bdf8" font-family="'Fira Code', monospace" font-size="12" font-weight="700">CORE-RTR // OSPF-AREA-0</text>
+
+            <!-- Node 3 -->
+            <circle cx="52%" cy="15%" r="9" fill="#070b16" stroke="#10b981" stroke-width="2.5" />
+            <circle cx="52%" cy="15%" r="3.5" fill="#10b981" />
+            <text x="53%" y="14%" fill="#34d399" font-family="'Fira Code', monospace" font-size="12" font-weight="700">EDGE-BGP [AS65001]</text>
+
+            <!-- Node 4 -->
+            <circle cx="78%" cy="32%" r="10" fill="#070b16" stroke="#06b6d4" stroke-width="2.5" />
+            <circle cx="78%" cy="32%" r="4" fill="#06b6d4" />
+            <text x="79%" y="31%" fill="#22d3ee" font-family="'Fira Code', monospace" font-size="12" font-weight="700">ACTIVE DIRECTORY DS</text>
+
+            <!-- Node 5 -->
+            <circle cx="94%" cy="22%" r="8" fill="#070b16" stroke="#a855f7" stroke-width="2.5" />
+            <circle cx="94%" cy="22%" r="3" fill="#a855f7" />
+            <text x="80%" y="21%" fill="#c084fc" font-family="'Fira Code', monospace" font-size="12" font-weight="700">RADIUS-AUTH</text>
+
+            <!-- Node 6 -->
+            <circle cx="40%" cy="65%" r="8" fill="#070b16" stroke="#06b6d4" stroke-width="2.5" />
+            <circle cx="40%" cy="65%" r="3" fill="#06b6d4" />
+            <text x="41%" y="64%" fill="#38bdf8" font-family="'Fira Code', monospace" font-size="12" font-weight="700">VLAN 20 • 10.0.20.0/24</text>
+
+            <!-- Node 7 -->
+            <circle cx="68%" cy="72%" r="9" fill="#070b16" stroke="#3b82f6" stroke-width="2.5" />
+            <circle cx="68%" cy="72%" r="3.5" fill="#3b82f6" />
+            <text x="69%" y="71%" fill="#60a5fa" font-family="'Fira Code', monospace" font-size="12" font-weight="700">MIKROTIK-CHR-GW</text>
+
+            <!-- Node 8 -->
+            <circle cx="88%" cy="85%" r="8" fill="#070b16" stroke="#10b981" stroke-width="2.5" />
+            <circle cx="88%" cy="85%" r="3" fill="#10b981" />
+            <text x="74%" y="84%" fill="#34d399" font-family="'Fira Code', monospace" font-size="12" font-weight="700">PoE-SW // Cat6-Trunk</text>
+        </svg>
+    </div>
+
+    <!-- ====================================================================
+         1. NAVIGATION BAR (স্টিকি ন্যাভবার)
+         ==================================================================== -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- Logo / Brand -->
+            <a href="#hero" class="flex items-center gap-2 group">
+                <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-lg font-mono-tech shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+                    IAM
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-white tracking-wide group-hover:text-cyan-400 transition-colors">Imtiaj Ahmed Mafi</span>
+                    <span class="text-[10px] text-cyan-400 font-mono-tech uppercase tracking-wider">Network & IT Systems</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <div class="hidden md:flex items-center space-x-7 text-sm font-medium">
+                <a href="#about" class="desktop-nav-link text-gray-300 hover:text-cyan-400 transition-colors">About</a>
+                <a href="#skills" class="desktop-nav-link text-gray-300 hover:text-cyan-400 transition-colors">Skills</a>
+                <a href="#projects" class="desktop-nav-link text-gray-300 hover:text-cyan-400 transition-colors">Projects</a>
+                <a href="#research" class="desktop-nav-link text-gray-300 hover:text-cyan-400 transition-colors">Research</a>
+                <a href="#experience" class="desktop-nav-link text-gray-300 hover:text-cyan-400 transition-colors">Experience</a>
+                <a href="#contact" class="desktop-nav-link text-gray-300 hover:text-cyan-400 transition-colors">Contact</a>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="hidden md:flex items-center gap-3">
+                <a href="assets/resume.pdf" target="_blank" download="Imtiaj_Ahmed_Mafi_Resume.pdf" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-cyan-400 border border-cyan-500/40 rounded-lg hover:bg-cyan-500/10 hover:border-cyan-400 transition-all glow-cyan-hover">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Resume</span>
+                </a>
+                <a href="#contact" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold uppercase tracking-wider bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:brightness-110 transition-all shadow-md shadow-cyan-500/20">
+                    <span>Hire Me</span>
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-gray-400 hover:text-white focus:outline-none p-2" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" class="mobile-nav-link block text-gray-300 hover:text-cyan-400 py-1">About</a>
+            <a href="#skills" class="mobile-nav-link block text-gray-300 hover:text-cyan-400 py-1">Skills</a>
+            <a href="#projects" class="mobile-nav-link block text-gray-300 hover:text-cyan-400 py-1">Projects</a>
+            <a href="#research" class="mobile-nav-link block text-gray-300 hover:text-cyan-400 py-1">Research</a>
+            <a href="#experience" class="mobile-nav-link block text-gray-300 hover:text-cyan-400 py-1">Experience</a>
+            <a href="#contact" class="mobile-nav-link block text-gray-300 hover:text-cyan-400 py-1">Contact</a>
+            <div class="pt-3 flex flex-col gap-2">
+                <a href="assets/resume.pdf" target="_blank" download="Imtiaj_Ahmed_Mafi_Resume.pdf" class="text-center py-2 text-xs uppercase tracking-wider text-cyan-400 border border-cyan-500/40 rounded-lg">
+                    <i class="fa-solid fa-download mr-1"></i> Download Resume
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ====================================================================
+         2. HERO SECTION (হিরো সেকশন)
+         ==================================================================== -->
+    <section id="hero" class="min-h-screen pt-28 pb-16 flex items-center relative overflow-hidden">
+        
+        <!-- Glow Orbs in Background -->
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 -right-32 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Column: Intro & Bio -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    
+                    <!-- Availability Badge -->
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-cyan-500/30 text-xs font-medium text-cyan-300">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+                        <span>Open to Entry-level Roles in Network & IT Infrastructure</span>
+                    </div>
+
+                    <!-- Main Name & Title -->
+                    <div class="space-y-2">
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+                            Hi, I'm <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500 bg-clip-text text-transparent">Imtiaj Ahmed Mafi</span>
+                        </h1>
+                        <p class="text-lg sm:text-xl text-slate-300 font-medium">
+                            Network & IT Infrastructure Specialist | Systems Administrator | CSE Graduate
+                        </p>
+                    </div>
+
+                    <!-- Professional Summary -->
+                    <p class="text-slate-400 text-base leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Motivated Computer Science graduate from <span class="text-white font-medium">IUBAT</span> with hands-on experience in enterprise networking, server administration, and routing protocols. Proficient in configuring Cisco & MikroTik devices, Active Directory, RADIUS, and TCP/IP architectures. Also an active researcher in explainable deep learning.
+                    </p>
+
+                    <!-- Tech Stack Quick Badges -->
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-2 pt-2">
+                        <span class="badge-tag"><i class="fa-solid fa-network-wired text-cyan-400 mr-1.5"></i> BGP & OSPF</span>
+                        <span class="badge-tag"><i class="fa-solid fa-server text-blue-400 mr-1.5"></i> Active Directory</span>
+                        <span class="badge-tag"><i class="fa-solid fa-microchip text-emerald-400 mr-1.5"></i> MikroTik & Cisco</span>
+                        <span class="badge-tag"><i class="fa-brands fa-python text-yellow-400 mr-1.5"></i> Python & Django</span>
+                        <span class="badge-tag"><i class="fa-solid fa-brain text-purple-400 mr-1.5"></i> Deep Learning</span>
+                    </div>
+
+                    <!-- Action CTAs -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="assets/resume.pdf" target="_blank" download="Imtiaj_Ahmed_Mafi_Resume.pdf" class="px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-sm hover:brightness-110 transition-all shadow-lg shadow-cyan-500/25 flex items-center gap-2">
+                            <i class="fa-solid fa-file-arrow-down"></i>
+                            <span>Download Resume</span>
+                        </a>
+                        <a href="#projects" class="px-6 py-3 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 font-semibold text-sm transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-diagram-project text-cyan-400"></i>
+                            <span>View Projects</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/imtiaj-ahmed-mafi-7b1a55333/" target="_blank" rel="noopener noreferrer" class="p-3 rounded-lg bg-slate-800/80 hover:bg-blue-600 hover:text-white border border-slate-700 text-slate-300 transition-all" title="LinkedIn Profile">
+                            <i class="fa-brands fa-linkedin text-lg"></i>
+                        </a>
+                        <a href="mailto:imtiajahmed129580@gmail.com" class="p-3 rounded-lg bg-slate-800/80 hover:bg-cyan-600 hover:text-white border border-slate-700 text-slate-300 transition-all" title="Email Imtiaj">
+                            <i class="fa-solid fa-envelope text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Column: Profile Photo & Interactive Terminal Card -->
+                <div class="lg:col-span-5 space-y-6">
+                    
+                    <!-- Profile Photo Card with Glow & Status Badge (Compact & Balanced) -->
+                    <div class="glass-card rounded-2xl p-2.5 relative border border-cyan-500/30 shadow-xl glow-cyan group max-w-[290px] sm:max-w-[310px] mx-auto">
+                        <div class="relative overflow-hidden rounded-xl bg-slate-950">
+                            <img src="assets/profile.jpg" alt="Imtiaj Ahmed Mafi" class="w-full h-60 sm:h-64 object-cover object-top rounded-xl group-hover:scale-105 transition-transform duration-500">
+                            
+                            <!-- Bottom Floating Tag on Image -->
+                            <div class="absolute bottom-2.5 left-2.5 right-2.5 bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-lg border border-cyan-500/40 text-xs font-mono-tech flex items-center justify-between shadow-lg">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+                                    <span class="text-white font-medium text-[11px]">Imtiaj Ahmed</span>
+                                </div>
+                                <span class="text-cyan-400 font-semibold text-[10px]">Network Eng.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Compact Terminal & System Status Card -->
+                    <div class="glass-card rounded-2xl p-5 relative border border-slate-800 shadow-xl">
+                        <!-- Terminal Header -->
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2.5 mb-3 font-mono-tech text-xs">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-green-500/80"></span>
+                            </div>
+                            <span class="text-slate-400">admin@imtiaj-noc: ~</span>
+                            <span class="text-cyan-400"><i class="fa-solid fa-shield-halved"></i> Secured</span>
+                        </div>
+
+                        <!-- Terminal Body Info -->
+                        <div class="space-y-2 font-mono-tech text-xs">
+                            <div class="flex justify-between items-center py-1 border-b border-slate-800/60">
+                                <span class="text-slate-400">Domain:</span>
+                                <span class="text-cyan-400 font-semibold">Network & IT Infrastructure</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-slate-800/60">
+                                <span class="text-slate-400">Current Role:</span>
+                                <span class="text-emerald-400 font-semibold">Networking Intern @ IUBAT</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-slate-800/60">
+                                <span class="text-slate-400">Routing Protocols:</span>
+                                <span class="text-yellow-400">BGP, OSPF, RIP, VLSM</span>
+                            </div>
+                            <div class="flex justify-between items-center py-1">
+                                <span class="text-slate-400">Server Stack:</span>
+                                <span class="text-blue-400">Active Directory, RADIUS, DHCP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         3. ABOUT & EDUCATION SECTION (সম্পর্কে ও শিক্ষা)
+         ==================================================================== -->
+    <section id="about" class="py-20 relative bg-slate-900/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-xs font-mono-tech uppercase tracking-widest text-cyan-400">Overview</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">About Me & Academic Background</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Combining foundational computer science principles with practical, hardware-level enterprise networking and hands-on server management.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- About Description -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="glass-card rounded-2xl p-6 space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Engineering with Practical Focus</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Throughout my academic and internship journey, I have focused heavily on computer networking, infrastructure optimization, and server architecture. I have configured enterprise routing topologies, managed Windows Server with Active Directory, and practiced physical optical fiber and Cat6 cabling.
+                        </p>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            In parallel, my interest in machine learning led to co-authoring research on explainable lightweight deep learning models. My goal is to join a forward-thinking organization as an IT Infrastructure / Network Engineer and contribute to high-availability systems.
+                        </p>
+                    </div>
+
+                    <!-- Quick Facts Grid -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-card rounded-xl p-4 text-center">
+                            <span class="block text-2xl font-bold text-cyan-400 font-mono-tech">2022+</span>
+                            <span class="text-xs text-slate-400">Teaching Assistant Experience</span>
+                        </div>
+                        <div class="glass-card rounded-xl p-4 text-center">
+                            <span class="block text-2xl font-bold text-emerald-400 font-mono-tech">2</span>
+                            <span class="text-xs text-slate-400">Research Publications</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Qualifications Cards -->
+                <div class="lg:col-span-7 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-graduation-cap text-cyan-400"></i>
+                        <span>Academic Qualifications</span>
+                    </h3>
+
+                    <!-- Degree 1: IUBAT -->
+                    <div class="glass-card rounded-xl p-5 border-l-4 border-l-cyan-500 space-y-2">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <h4 class="font-bold text-white text-base">Bachelor of Science in Computer Science and Engineering</h4>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-mono-tech bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">2026 Grad</span>
+                        </div>
+                        <p class="text-slate-300 text-sm">International University of Business Agriculture and Technology (IUBAT)</p>
+                        <div class="flex items-center gap-4 text-xs text-slate-400 pt-1 font-mono-tech">
+                            <span><i class="fa-solid fa-award text-yellow-400 mr-1"></i> CGPA: 3.00 / 4.00</span>
+                            <span><i class="fa-solid fa-location-dot text-slate-500 mr-1"></i> Dhaka, Bangladesh</span>
+                        </div>
+                    </div>
+
+                    <!-- Degree 2: Patuakhali Govt College -->
+                    <div class="glass-card rounded-xl p-5 border-l-4 border-l-blue-500 space-y-2">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <h4 class="font-bold text-white text-base">Higher Secondary Certificate (HSC) - Science</h4>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-mono-tech bg-blue-500/10 text-blue-400 border border-blue-500/20">2020</span>
+                        </div>
+                        <p class="text-slate-300 text-sm">Patuakhali Govt College</p>
+                        <div class="flex items-center gap-4 text-xs text-slate-400 pt-1 font-mono-tech">
+                            <span><i class="fa-solid fa-award text-yellow-400 mr-1"></i> GPA: 5.00 / 5.00</span>
+                            <span><i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> Golden Grade</span>
+                        </div>
+                    </div>
+
+                    <!-- Degree 3: Abdul Haye Biddaniketon -->
+                    <div class="glass-card rounded-xl p-5 border-l-4 border-l-purple-500 space-y-2">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <h4 class="font-bold text-white text-base">Secondary School Certificate (SSC) - Science</h4>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-mono-tech bg-purple-500/10 text-purple-400 border border-purple-500/20">2018</span>
+                        </div>
+                        <p class="text-slate-300 text-sm">Abdul Haye Biddaniketon</p>
+                        <div class="flex items-center gap-4 text-xs text-slate-400 pt-1 font-mono-tech">
+                            <span><i class="fa-solid fa-award text-yellow-400 mr-1"></i> GPA: 4.83 / 5.00</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         4. TECHNICAL SKILLS MATRIX (টেকনিক্যাল স্কিলস)
+         ==================================================================== -->
+    <section id="skills" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-xs font-mono-tech uppercase tracking-widest text-cyan-400">Competencies</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Technical Skills & Expertise</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Comprehensive proficiency across enterprise routing, physical network infrastructure, server administration, and software development.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Category 1: Networking & Protocols -->
+                <div class="glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 text-xl mb-4">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Routing & Protocols</h3>
+                        <p class="text-slate-400 text-xs mb-4">
+                            Enterprise IP addressing, dynamic routing protocol convergence, and switching architectures.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="badge-tag">IPv4 & IPv6</span>
+                            <span class="badge-tag">Subnetting / VLSM</span>
+                            <span class="badge-tag">Supernetting / CIDR</span>
+                            <span class="badge-tag">BGP</span>
+                            <span class="badge-tag">OSPF</span>
+                            <span class="badge-tag">RIP</span>
+                            <span class="badge-tag">TCP/IP Suite</span>
+                            <span class="badge-tag">NAT / PAT</span>
+                            <span class="badge-tag">DHCP & DNS</span>
+                            <span class="badge-tag">L2 & L3 Switching</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 text-[11px] font-mono-tech text-cyan-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-check"></i> Layer 2 & 3 Proficient
+                    </div>
+                </div>
+
+                <!-- Category 2: Network Devices & Hardware -->
+                <div class="glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-xl mb-4">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Devices & Simulation</h3>
+                        <p class="text-slate-400 text-xs mb-4">
+                            Physical device configuration, wireless access points, cabling, and virtual network simulations.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="badge-tag">MikroTik RouterOS</span>
+                            <span class="badge-tag">Access Points (AP)</span>
+                            <span class="badge-tag">Cisco Packet Tracer</span>
+                            <span class="badge-tag">Ethernet Cabling</span>
+                            <span class="badge-tag">Cat5 / Cat6 Crimping</span>
+                            <span class="badge-tag">Optical Fiber</span>
+                            <span class="badge-tag">PoE Configuration</span>
+                            <span class="badge-tag">Network Diagnostics</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 text-[11px] font-mono-tech text-blue-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-check"></i> Hands-on Lab Tested
+                    </div>
+                </div>
+
+                <!-- Category 3: Server & Network Services -->
+                <div class="glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-xl mb-4">
+                            <i class="fa-solid fa-server"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Server Administration</h3>
+                        <p class="text-slate-400 text-xs mb-4">
+                            Central identity management, server roles, mail protocols, and secure network access control.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="badge-tag">Active Directory (AD DS)</span>
+                            <span class="badge-tag">RADIUS Server</span>
+                            <span class="badge-tag">Mail Server (SMTP/POP3)</span>
+                            <span class="badge-tag">Proxy Server</span>
+                            <span class="badge-tag">DHCP Server Scope</span>
+                            <span class="badge-tag">Group Policy (GPO)</span>
+                            <span class="badge-tag">Server Optimization</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 text-[11px] font-mono-tech text-purple-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-check"></i> Enterprise Admin
+                    </div>
+                </div>
+
+                <!-- Category 4: Programming & Databases -->
+                <div class="glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl mb-4">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Software & Databases</h3>
+                        <p class="text-slate-400 text-xs mb-4">
+                            Core programming languages, web frameworks, relational databases, and developer tooling.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="badge-tag">Python</span>
+                            <span class="badge-tag">Django Framework</span>
+                            <span class="badge-tag">C & C++</span>
+                            <span class="badge-tag">C# (.NET)</span>
+                            <span class="badge-tag">PHP</span>
+                            <span class="badge-tag">MySQL</span>
+                            <span class="badge-tag">MS SQL Server</span>
+                            <span class="badge-tag">HTML5 / CSS / Bootstrap</span>
+                            <span class="badge-tag">VS Code / VS 2022</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 text-[11px] font-mono-tech text-emerald-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-check"></i> Python & Django Certified
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         5. FEATURED TECHNICAL PROJECTS (প্রজেক্ট সেকশন)
+         ==================================================================== -->
+    <section id="projects" class="py-20 relative bg-slate-900/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-xs font-mono-tech uppercase tracking-widest text-cyan-400">Implementations</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Featured Technical Projects</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Real-world infrastructure deployments, network topologies, and full-stack software applications.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project 1: IUBAT Network Infrastructure (Featured Flagship) -->
+                <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between border-cyan-500/30">
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center justify-between text-xs font-mono-tech">
+                            <span class="px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Enterprise Infra</span>
+                            <span class="text-slate-400">IUBAT Deployment</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">
+                            Network Infrastructure Management & Server Optimization
+                        </h3>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Comprehensive server administration and optimization project at IUBAT Computer Lab. Implemented centralized Active Directory domain authentication, RADIUS server for secure network access control, dedicated DHCP scopes, caching proxy server, and SMTP/POP3 mail routing to maximize network uptime.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 pt-2">
+                            <span class="badge-tag">Active Directory</span>
+                            <span class="badge-tag">RADIUS</span>
+                            <span class="badge-tag">Proxy Server</span>
+                            <span class="badge-tag">DHCP & DNS</span>
+                            <span class="badge-tag">Mail Server</span>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs font-mono-tech">
+                        <span class="text-emerald-400"><i class="fa-solid fa-check-circle mr-1"></i> Production Verified</span>
+                        <span class="text-slate-400">Infrastructure</span>
+                    </div>
+                </div>
+
+                <!-- Project 2: Cisco Packet Tracer Routing Simulation -->
+                <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between">
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center justify-between text-xs font-mono-tech">
+                            <span class="px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">Simulation Lab</span>
+                            <span class="text-slate-400">Cisco Packet Tracer</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">
+                            Enterprise Multi-Area Routing & Topology Design
+                        </h3>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Architected and simulated a resilient enterprise WAN topology featuring OSPF multi-area routing and BGP exterior gateway peering across simulated autonomous systems. Configured NAT/PAT for IPv4 address preservation, VLAN trunking, inter-VLAN routing, and ACL packet filtering.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 pt-2">
+                            <span class="badge-tag">Cisco Packet Tracer</span>
+                            <span class="badge-tag">BGP & OSPF</span>
+                            <span class="badge-tag">CIDR / VLSM</span>
+                            <span class="badge-tag">NAT / PAT</span>
+                            <span class="badge-tag">VLAN & Trunking</span>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs font-mono-tech">
+                        <span class="text-cyan-400"><i class="fa-solid fa-diagram-project mr-1"></i> Multi-Router Lab</span>
+                        <span class="text-slate-400">Networking</span>
+                    </div>
+                </div>
+
+                <!-- Project 3: Fullstack Web Application (Python & Django) -->
+                <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between">
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center justify-between text-xs font-mono-tech">
+                            <span class="px-2.5 py-1 rounded bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">Fullstack Web</span>
+                            <span class="text-slate-400">Python / Django</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">
+                            Database-Driven Web Application with Django
+                        </h3>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Developed a fullstack web management system using Django, Python, and MySQL as part of the Ministry of ICT (EDGE Bangladesh) hands-on training. Implemented user role-based authentication, CRUD database operations, relational schemas, and responsive UI with Bootstrap.
+                        </p>
+                        <div class="flex flex-wrap gap-1.5 pt-2">
+                            <span class="badge-tag">Python 3</span>
+                            <span class="badge-tag">Django ORM</span>
+                            <span class="badge-tag">MySQL</span>
+                            <span class="badge-tag">Bootstrap 5</span>
+                            <span class="badge-tag">MVC Architecture</span>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 border-t border-slate-800/80 mt-4 flex items-center justify-between text-xs font-mono-tech">
+                        <span class="text-yellow-400"><i class="fa-brands fa-python mr-1"></i> EDGE ICT Certified</span>
+                        <span class="text-slate-400">Software</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         6. RESEARCH & PUBLICATIONS SECTION (গবেষণা ও পেপার)
+         ==================================================================== -->
+    <section id="research" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-xs font-mono-tech uppercase tracking-widest text-emerald-400">Academic Rigor</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Research & Publications</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Investigating lightweight computer vision algorithms and machine learning feature optimization.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Publication 1: Plant Leaf Disease (Accepted) -->
+                <div class="glass-card rounded-2xl p-7 relative border-l-4 border-l-emerald-500 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono-tech bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                            <i class="fa-solid fa-circle-check"></i> Accepted
+                        </span>
+                        <span class="text-xs font-mono-tech text-slate-400">Deep Learning & Computer Vision</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-white leading-snug">
+                        “Explainable Lightweight Deep Learning for Plant Leaf Disease Detection Using MobileNet and Grad-CAM”
+                    </h3>
+
+                    <p class="text-xs font-mono-tech text-cyan-300">
+                        <span class="text-slate-400">Authors:</span> Iftakhar Ahmed Remon, <span class="font-bold underline text-white">Imtiaj Ahmed Mafi</span>, Muhammad Abir Hossain, and MD Nayem
+                    </p>
+
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Designed an efficient, lightweight convolutional deep learning architecture using MobileNet tailored for real-time plant pathology on resource-constrained mobile and edge devices. Integrated Grad-CAM (Gradient-weighted Class Activation Mapping) to make the model’s diagnostic decisions explainable and verifiable for agricultural field specialists.
+                    </p>
+
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="badge-tag">MobileNet</span>
+                        <span class="badge-tag">Grad-CAM</span>
+                        <span class="badge-tag">Explainable AI (XAI)</span>
+                        <span class="badge-tag">Edge Computing</span>
+                    </div>
+                </div>
+
+                <!-- Publication 2: DASS-21 Feature Reduction (In Progress) -->
+                <div class="glass-card rounded-2xl p-7 relative border-l-4 border-l-cyan-500 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono-tech bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">
+                            <i class="fa-solid fa-spinner fa-spin"></i> Manuscript in Progress
+                        </span>
+                        <span class="text-xs font-mono-tech text-slate-400">Machine Learning / Psychometrics</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-white leading-snug">
+                        “A Concise Feature Reduction Method For Developing a Short form DASS-21 Scale”
+                    </h3>
+
+                    <p class="text-xs font-mono-tech text-cyan-300">
+                        <span class="text-slate-400">Authors:</span> Arifa Tur Rahman and <span class="font-bold underline text-white">Imtiaj Ahmed Mafi</span>
+                    </p>
+
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Applied statistical machine learning and dimensionality reduction algorithms to optimize the standard 21-item Depression, Anxiety, and Stress Scale (DASS-21). Successfully developed an abbreviated assessment instrument that retains high construct validity and diagnostic precision while minimizing respondent evaluation time.
+                    </p>
+
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="badge-tag">Feature Reduction</span>
+                        <span class="badge-tag">Dimensionality Optimization</span>
+                        <span class="badge-tag">Psychometrics</span>
+                        <span class="badge-tag">Data Science</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         7. PROFESSIONAL EXPERIENCE & TIMELINE (অভিজ্ঞতা)
+         ==================================================================== -->
+    <section id="experience" class="py-20 relative bg-slate-900/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-xs font-mono-tech uppercase tracking-widest text-cyan-400">Career History</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Experience & Leadership</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Demonstrated track record of lab administration, student mentorship, and technical event organization.
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-8 relative before:absolute before:inset-0 before:left-8 md:before:left-1/2 before:-translate-x-1/2 before:w-0.5 before:bg-slate-800">
+                
+                <!-- Experience Item 1: Networking Intern -->
+                <div class="relative flex flex-col md:flex-row items-start md:items-center gap-6 group">
+                    <div class="w-12 h-12 rounded-full bg-cyan-500/20 border-2 border-cyan-400 flex items-center justify-center text-cyan-300 text-lg z-10 shrink-0 md:order-2 md:mx-auto shadow-lg shadow-cyan-500/30">
+                        <i class="fa-solid fa-ethernet"></i>
+                    </div>
+                    <div class="glass-card rounded-2xl p-6 md:w-[calc(50%-3rem)] md:order-1 space-y-3 border-l-4 border-l-cyan-400">
+                        <div class="flex items-center justify-between text-xs font-mono-tech">
+                            <span class="text-cyan-400 font-bold">13 May 2026 – Present</span>
+                            <span class="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300">Internship</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Networking Intern</h3>
+                        <p class="text-xs text-slate-400">Computer Lab, IUBAT – International University of Business Agriculture and Technology</p>
+                        <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside leading-relaxed">
+                            <li>Hands-on IP addressing, subnetting, CIDR, and VLSM optimization.</li>
+                            <li>Practiced routing protocols (RIP, OSPF, BGP) using Cisco Packet Tracer.</li>
+                            <li>Configured MikroTik routers, access points (APs), and wireless bandwidth management.</li>
+                            <li>Assisted in setting up DHCP, DNS, NAT/PAT, mail servers, and proxy caching.</li>
+                            <li>Administered Active Directory domain controllers and user account permissions.</li>
+                            <li>Handled physical Cat5/Cat6 Ethernet termination, optical fiber patch cables, and PoE switches.</li>
+                        </ul>
+                    </div>
+                    <div class="hidden md:block md:w-[calc(50%-3rem)] md:order-3 text-sm text-slate-500 pl-4 font-mono-tech">
+                        IUBAT Network Operations Lab
+                    </div>
+                </div>
+
+                <!-- Experience Item 2: Teaching Assistant -->
+                <div class="relative flex flex-col md:flex-row items-start md:items-center gap-6 group">
+                    <div class="w-12 h-12 rounded-full bg-blue-500/20 border-2 border-blue-400 flex items-center justify-center text-blue-300 text-lg z-10 shrink-0 md:order-2 md:mx-auto shadow-lg shadow-blue-500/30">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <div class="hidden md:block md:w-[calc(50%-3rem)] md:order-1 text-sm text-slate-500 text-right pr-4 font-mono-tech">
+                        Department of CSE, IUBAT
+                    </div>
+                    <div class="glass-card rounded-2xl p-6 md:w-[calc(50%-3rem)] md:order-3 space-y-3 border-l-4 border-l-blue-400">
+                        <div class="flex items-center justify-between text-xs font-mono-tech">
+                            <span class="text-blue-400 font-bold">May 2022 – Present</span>
+                            <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-300">Mentorship</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Teaching Assistant</h3>
+                        <p class="text-xs text-slate-400">Department of Computer Science & Engineering, IUBAT</p>
+                        <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside leading-relaxed">
+                            <li>Mentored junior engineering students in programming (C, C++, Python) and fundamental CS logic.</li>
+                            <li>Organized major university events: IUBAT Battle of Intellects Contests (2022 participant, 2025 volunteer organizer).</li>
+                            <li>Assisted in conducting career development workshops and research seminars.</li>
+                            <li>Coordinated fresher orientation programs and campus engagement activities.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience Item 3: Certifications & Contests -->
+                <div class="relative flex flex-col md:flex-row items-start md:items-center gap-6 group">
+                    <div class="w-12 h-12 rounded-full bg-yellow-500/20 border-2 border-yellow-400 flex items-center justify-center text-yellow-300 text-lg z-10 shrink-0 md:order-2 md:mx-auto shadow-lg shadow-yellow-500/30">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+                    <div class="glass-card rounded-2xl p-6 md:w-[calc(50%-3rem)] md:order-1 space-y-3 border-l-4 border-l-yellow-400">
+                        <div class="flex items-center justify-between text-xs font-mono-tech">
+                            <span class="text-yellow-400 font-bold">Government Certified</span>
+                            <span class="px-2 py-0.5 rounded bg-yellow-500/10 text-yellow-300">Training</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Digital Skill for Students (Python & Django)</h3>
+                        <p class="text-xs text-slate-400">EDGE Bangladesh, Ministry of Information & Communication Technology (ICT)</p>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Completed comprehensive hands-on development training covering Python data structures, algorithms, Django framework, and web service security.
+                        </p>
+                    </div>
+                    <div class="hidden md:block md:w-[calc(50%-3rem)] md:order-3 text-sm text-slate-500 pl-4 font-mono-tech">
+                        Ministry of ICT, Bangladesh
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Academic Reference Box -->
+            <div class="mt-16 max-w-2xl mx-auto glass-card rounded-2xl p-6 border border-slate-700 text-center space-y-2">
+                <span class="text-xs font-mono-tech uppercase text-cyan-400 tracking-wider">Academic Reference</span>
+                <h4 class="text-base font-bold text-white">Prof. Utpal Kanti Das</h4>
+                <p class="text-xs text-slate-300">Professor & Chairman, Department of Computer Science and Engineering</p>
+                <p class="text-xs text-slate-400">IUBAT – International University of Business Agriculture and Technology</p>
+                <div class="pt-2 flex flex-wrap justify-center items-center gap-4 text-xs font-mono-tech text-cyan-300">
+                    <span><i class="fa-solid fa-phone mr-1"></i> +880 1819 199419</span>
+                    <span><i class="fa-solid fa-envelope mr-1"></i> ukd@iubat.edu</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         8. CONTACT & CONNECT SECTION (যোগাযোগ)
+         ==================================================================== -->
+    <section id="contact" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-xs font-mono-tech uppercase tracking-widest text-cyan-400">Get in Touch</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Contact & Connect</h2>
+                <p class="text-slate-400 text-sm sm:text-base">
+                    Interested in discussing a network engineering role, collaboration, or system administration project? Feel free to reach out.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Contact Direct Cards -->
+                <div class="lg:col-span-5 space-y-4">
+                    
+                    <!-- Email Card with Copy Button -->
+                    <div class="glass-card rounded-2xl p-5 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-lg">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block">Email Address</span>
+                                <a href="mailto:imtiajahmed129580@gmail.com" class="text-sm font-semibold text-white hover:text-cyan-400 transition-colors">
+                                    imtiajahmed129580@gmail.com
+                                </a>
+                            </div>
+                        </div>
+                        <button onclick="copyToClipboard('imtiajahmed129580@gmail.com', 'ইমেইল')" class="p-2 text-slate-400 hover:text-cyan-400 transition-colors" title="Copy Email">
+                            <i class="fa-regular fa-copy text-base"></i>
+                        </button>
+                    </div>
+
+                    <!-- Phone Card with Copy Button -->
+                    <div class="glass-card rounded-2xl p-5 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-lg">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block">Phone / WhatsApp</span>
+                                <a href="tel:+8801712906335" class="text-sm font-semibold text-white hover:text-blue-400 transition-colors">
+                                    +880 1712-906335
+                                </a>
+                            </div>
+                        </div>
+                        <button onclick="copyToClipboard('+8801712906335', 'ফোন নম্বর')" class="p-2 text-slate-400 hover:text-blue-400 transition-colors" title="Copy Phone Number">
+                            <i class="fa-regular fa-copy text-base"></i>
+                        </button>
+                    </div>
+
+                    <!-- Location Card -->
+                    <div class="glass-card rounded-2xl p-5 flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-lg">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-400 block">Location</span>
+                            <span class="text-sm font-semibold text-white">Sector-10, Uttara, Dhaka, Bangladesh</span>
+                        </div>
+                    </div>
+
+                    <!-- LinkedIn Card -->
+                    <div class="glass-card rounded-2xl p-5 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-lg">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-400 block">LinkedIn Profile</span>
+                                <span class="text-sm font-semibold text-white">imtiaj-ahmed-mafi-7b1a55333</span>
+                            </div>
+                        </div>
+                        <a href="https://www.linkedin.com/in/imtiaj-ahmed-mafi-7b1a55333/" target="_blank" rel="noopener noreferrer" class="p-2 text-cyan-400 hover:text-white transition-colors" title="Open LinkedIn">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-base"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Interactive Message Form -->
+                <div class="lg:col-span-7">
+                    <form id="contact-form" class="glass-card rounded-2xl p-7 space-y-4 border border-cyan-500/20">
+                        <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane text-cyan-400"></i>
+                            <span>Send a Message</span>
+                        </h3>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="sender-name" class="block text-xs font-mono-tech text-slate-400 mb-1">Your Name</label>
+                                <input type="text" id="sender-name" required placeholder="John Doe" class="w-full px-4 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 transition-colors">
+                            </div>
+                            <div>
+                                <label for="sender-email" class="block text-xs font-mono-tech text-slate-400 mb-1">Your Email</label>
+                                <input type="email" id="sender-email" required placeholder="john@example.com" class="w-full px-4 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 transition-colors">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="sender-message" class="block text-xs font-mono-tech text-slate-400 mb-1">Message</label>
+                            <textarea id="sender-message" rows="4" required placeholder="Write your message or inquiry here..." class="w-full px-4 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 transition-colors"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-sm hover:brightness-110 transition-all shadow-md shadow-cyan-500/20 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Send Message via Email</span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         9. FOOTER (ফুটার)
+         ==================================================================== -->
+    <footer class="border-t border-slate-800 py-8 bg-black/40 text-center text-xs text-slate-500 font-mono-tech space-y-2">
+        <p>© 2026 Imtiaj Ahmed Mafi. All Rights Reserved.</p>
+        <p class="text-[11px] text-slate-600">Built with HTML5 & Tailwind CSS • Optimized for Enterprise IT & Network Roles</p>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 p-3 rounded-full bg-cyan-500 text-white opacity-0 pointer-events-none transition-all duration-300 shadow-lg shadow-cyan-500/30 hover:scale-110 z-40" title="Back to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Toast Notification (ক্লিপবোর্ডে কপি হলে নিচে পপআপ উঠবে) -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 border border-cyan-500/40 text-cyan-300 px-5 py-3 rounded-xl shadow-2xl text-xs font-mono-tech flex items-center gap-2.5 transform translate-y-20 opacity-0 pointer-events-none z-50">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toast-message">ক্লিপবোর্ডে কপি করা হয়েছে!</span>
+    </div>
+
+    <!-- Script File -->
+    <script src="script.js"></script>
+
+</body>
+</html>

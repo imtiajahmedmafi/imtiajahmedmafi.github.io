@@ -1,0 +1,236 @@
+/* ==========================================================================
+   Imtiaj Ahmed Mafi - Portfolio Custom Styles
+   Theme: Modern Dark Tech / Network Operations Center (NOC)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary-cyan: #06b6d4;
+  --primary-blue: #3b82f6;
+  --accent-emerald: #10b981;
+  --bg-dark: #070b16;
+  --card-dark: #0f172a;
+  --border-dark: #1e293b;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: #e2e8f0;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Monospace font for network terms and tags */
+.font-mono-tech {
+  font-family: 'Fira Code', monospace;
+}
+
+/* High-Tech Grid Pattern */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ==========================================================================
+   Interactive Network Canvas & Crisp Watermark Layer
+   ========================================================================== */
+#network-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.watermark-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Ambient Radial Glows */
+.ambient-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.glow-top-left {
+  top: -10%;
+  left: -5%;
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.28) 0%, transparent 70%);
+}
+
+.glow-mid-right {
+  top: 35%;
+  right: -8%;
+  width: 750px;
+  height: 750px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.24) 0%, transparent 70%);
+}
+
+.glow-bottom-left {
+  bottom: -10%;
+  left: 10%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
+}
+
+/* Crisp & Clear Outlined Watermark Typography */
+.watermark-outline-text {
+  position: absolute;
+  font-family: 'Fira Code', monospace;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: transparent;
+  user-select: none;
+  line-height: 0.9;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.watermark-hero {
+  top: 14%;
+  left: 50%;
+  transform: translate(-50%, 0) rotate(-4deg);
+  font-size: clamp(4rem, 10vw, 9.5rem);
+  -webkit-text-stroke: 2px rgba(6, 182, 212, 0.12);
+  text-shadow: 0 0 30px rgba(6, 182, 212, 0.1);
+}
+
+.watermark-middle {
+  top: 50%;
+  right: -2%;
+  transform: rotate(-90deg);
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  -webkit-text-stroke: 1.8px rgba(59, 130, 246, 0.1);
+  text-shadow: 0 0 25px rgba(59, 130, 246, 0.08);
+}
+
+.watermark-bottom {
+  bottom: 6%;
+  left: 2%;
+  transform: rotate(2deg);
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  -webkit-text-stroke: 1.8px rgba(16, 185, 129, 0.1);
+  text-shadow: 0 0 25px rgba(16, 185, 129, 0.08);
+}
+
+/* Crisp Cyber Circuit Border Overlay */
+.cyber-circuit-corner {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-color: rgba(6, 182, 212, 0.25);
+  pointer-events: none;
+}
+
+/* Glow effects */
+.glow-cyan {
+  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.35);
+}
+
+.glow-cyan-hover:hover {
+  box-shadow: 0 0 25px -3px rgba(6, 182, 212, 0.5);
+  border-color: rgba(6, 182, 212, 0.7);
+}
+
+.glow-blue {
+  box-shadow: 0 0 25px -5px rgba(59, 130, 246, 0.35);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070b16;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #06b6d4;
+}
+
+/* Glassmorphism Card Style (Raised above canvas) */
+.glass-card {
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 10;
+}
+
+.glass-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 16px 40px -10px rgba(6, 182, 212, 0.22);
+}
+
+/* Pulsing Status Dot */
+@keyframes pulse-green {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.15);
+  }
+}
+
+.pulse-dot {
+  animation: pulse-green 2s infinite ease-in-out;
+}
+
+/* Badge styling */
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  background-color: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  transition: all 0.2s;
+}
+
+.badge-tag:hover {
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+/* Toast Notification Animation */
+#toast {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
